@@ -13,16 +13,10 @@ module.exports = {
     react: {
       version: 'detect',
     },
-    'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
-    },
     'import/resolver': {
       node: {
         paths: ['src'],
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
-      },
-      typescript: {
-        alwaysTryTypes: true,
       },
     },
   },
@@ -40,7 +34,7 @@ module.exports = {
     'plugin:import/typescript',
     'plugin:prettier/recommended', // Make sure this is always the last element in the array.
   ],
-  plugins: ['import', 'prettier'],
+  plugins: ['prettier'],
   rules: {
     'prettier/prettier': ['error', {}, { usePrettierrc: true }],
     'react/react-in-jsx-scope': 'off',
@@ -51,6 +45,7 @@ module.exports = {
       'warn',
       { varsIgnorePattern: '^_', argsIgnorePattern: '^_' },
     ],
+    'import/no-cycle': 'error',
     'jsx-a11y/anchor-is-valid': [
       'error',
       {
@@ -59,8 +54,6 @@ module.exports = {
         aspects: ['invalidHref', 'preferButton'],
       },
     ],
-    'import/no-cycle': 'error',
-    'import/no-unresolved': 'error',
     'import/order': [
       'error',
       {
