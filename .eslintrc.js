@@ -1,3 +1,4 @@
+/* eslint-env node */
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
@@ -33,7 +34,7 @@ module.exports = {
     'plugin:import/typescript',
     'plugin:prettier/recommended', // Make sure this is always the last element in the array.
   ],
-  plugins: ['simple-import-sort', 'prettier'],
+  plugins: ['prettier'],
   rules: {
     'prettier/prettier': ['error', {}, { usePrettierrc: true }],
     'react/react-in-jsx-scope': 'off',
@@ -44,8 +45,6 @@ module.exports = {
       'warn',
       { varsIgnorePattern: '^_', argsIgnorePattern: '^_' },
     ],
-    'simple-import-sort/imports': 'error',
-    'simple-import-sort/exports': 'error',
     'import/no-cycle': 'error',
     'jsx-a11y/anchor-is-valid': [
       'error',
