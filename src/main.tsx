@@ -7,8 +7,9 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { CssBaseline, StyledEngineProvider, ThemeProvider } from '@mui/material';
+import { styles } from 'run-and-drive-lib';
 
-import theme from '@styles/theme';
+import Routing from '@navigation/Routing';
 
 const container = document.getElementById('root') as HTMLDivElement;
 const root = createRoot(container);
@@ -16,9 +17,9 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={styles.theme}>
         <CssBaseline enableColorScheme />
-        <h1>Hello there! There is a roboto</h1>
+        <Routing />
       </ThemeProvider>
     </StyledEngineProvider>
   </React.StrictMode>,
