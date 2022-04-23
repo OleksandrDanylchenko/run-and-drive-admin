@@ -18,7 +18,7 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.3.0",
-    "run-and-drive-lib": "^0.2.1"
+    "run-and-drive-lib": "1.0.1"
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.9.2",

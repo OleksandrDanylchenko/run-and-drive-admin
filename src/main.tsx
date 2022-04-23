@@ -7,7 +7,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { CssBaseline, StyledEngineProvider, ThemeProvider } from '@mui/material';
-import { styles } from 'run-and-drive-lib';
+import { theme } from 'run-and-drive-lib/styles';
 
 import Routing from '@navigation/Routing';
 
@@ -17,7 +17,7 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={styles.theme}>
+      <ThemeProvider theme={theme}>
         <CssBaseline enableColorScheme />
         <Routing />
       </ThemeProvider>
