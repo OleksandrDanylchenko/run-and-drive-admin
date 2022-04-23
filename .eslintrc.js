@@ -60,7 +60,10 @@ module.exports = {
       },
     ],
     'import/no-cycle': 'error',
-    'import/no-unresolved': 'error',
+
+    // package.json export property isn't supported yet
+    // https://github.com/import-js/eslint-plugin-import/issues/1868#issuecomment-962267275
+    'import/no-unresolved': [2, { ignore: ['^run-and-drive-lib/'] }],
     'import/order': [
       'error',
       {
