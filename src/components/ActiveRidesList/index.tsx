@@ -11,20 +11,20 @@ import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 
+import { users } from './mockUsers';
 import { AutoSizerWrapper, ListHeader, ListWrapper } from './styles';
 
 const ActiveRidesList: FC = () => {
   const renderListElement = useCallback((props: ListChildComponentProps) => {
     const { index, style } = props;
+    const { name, surname, email, photoUrl } = users[index];
 
     return (
       <ListItem style={style} key={index} component="div" disableGutters>
         <ListItemAvatar>
-          <Avatar>
-            <ImageIcon />
-          </Avatar>
+          <Avatar src={photoUrl} alt={name} />
         </ListItemAvatar>
-        <ListItemText primary={`Item ${index}`} />
+        <ListItemText primary={`${name} ${surname}`} secondary={email} />
       </ListItem>
     );
   }, []);
@@ -41,7 +41,12 @@ const ActiveRidesList: FC = () => {
           {({ height, width }) => (
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            <FixedSizeList width={width} height={height} itemCount={20} itemSize={60}>
+            <FixedSizeList
+              width={width}
+              height={height}
+              itemCount={users.length}
+              itemSize={60}
+            >
               {renderListElement}
             </FixedSizeList>
           )}
