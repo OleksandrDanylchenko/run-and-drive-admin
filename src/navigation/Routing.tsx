@@ -10,7 +10,7 @@ const Routing: FC = () => (
       <Route path="/" element={<Home />}>
         <Route index element={<Dashboard />} />
       </Route>
-      <Route element={<Navigate to="/" />} />
+      <Route path="/*" element={<Navigate to="/" />} />
     </Routes>
   </BrowserRouter>
 );
