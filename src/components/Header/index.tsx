@@ -26,7 +26,7 @@ const Header: FC = () => {
   );
 
   return (
-    <AppBar>
+    <AppBar position="static">
       <Toolbar css={HeaderToolbar}>
         <Typography variant="h1" css={HeaderTitle}>
           <MapIcon />
