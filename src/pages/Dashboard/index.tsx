@@ -3,6 +3,7 @@ import { FC } from 'react';
 import Grid from '@mui/material/Grid';
 
 import ActiveRidesList from '@components/ActiveRidesList';
+import ActiveRidesMap from '@components/ActiveRidesMap';
 
 import { DashboardGrid } from './styles';
 
@@ -14,7 +15,7 @@ const Dashboard: FC = () => {
       </Grid>
       <Grid item container xs>
         <Grid item xs={12}>
-          Map
+          <ActiveRidesMap />
         </Grid>
         <Grid item xs={12}>
           User info
