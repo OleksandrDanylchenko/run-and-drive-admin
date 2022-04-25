@@ -1,16 +1,16 @@
 import { FC, useCallback, useMemo, useState, memo } from 'react';
 
 import Paper from '@mui/material/Paper';
-import { useLoadScript, GoogleMap } from '@react-google-maps/api';
+import { useLoadScript, GoogleMap as GoogleMapLib } from '@react-google-maps/api';
 
-import { MapWrapper, GoogleMapContainer } from '@components/ActiveRidesMap/styles';
+import { MapWrapper, GoogleMapContainer } from '@components/GoogleMap/styles';
 
 const center = {
   lat: 50.450001,
   lng: 30.523333,
 };
 
-const ActiveRidesMap: FC = () => {
+const GoogleMap: FC = () => {
   const { isLoaded, loadError } = useLoadScript({
     id: 'google-map-script',
     googleMapsApiKey: 'gg',
@@ -32,7 +32,7 @@ const ActiveRidesMap: FC = () => {
     }
 
     return isLoaded ? (
-      <GoogleMap
+      <GoogleMapLib
         mapContainerStyle={GoogleMapContainer}
         center={center}
         zoom={11}
@@ -40,7 +40,7 @@ const ActiveRidesMap: FC = () => {
         onUnmount={onMapUnmount}
       >
         <></>
-      </GoogleMap>
+      </GoogleMapLib>
     ) : (
       <></>
     );
@@ -49,4 +49,4 @@ const ActiveRidesMap: FC = () => {
   return <Paper css={MapWrapper}>{mapElement}</Paper>;
 };
 
-export default memo(ActiveRidesMap);
+export default memo(GoogleMap);
