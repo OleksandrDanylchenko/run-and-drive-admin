@@ -9,7 +9,7 @@ import { DashboardGrid } from './styles';
 const Dashboard: FC = () => {
   return (
     <Grid container spacing={2} css={DashboardGrid}>
-      <Grid item xs={4}>
+      <Grid item xs={5} sm={5} md={4} lg={3}>
         <ActiveRidesList />
       </Grid>
       <Grid item container xs>
