@@ -1,5 +1,4 @@
 import { FC, useCallback } from 'react';
-import { Link } from 'react-router-dom';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
 
@@ -17,15 +16,10 @@ import { AutoSizerWrapper, ListHeader, ListWrapper } from './styles';
 const ActiveRidesList: FC = () => {
   const renderListElement = useCallback((props: ListChildComponentProps) => {
     const { index, style } = props;
-    const { id, name, surname, email, photoUrl } = users[index];
+    const { name, surname, email, photoUrl } = users[index];
 
     return (
-      <ListItemButton
-        style={style}
-        key={index}
-        component={Link}
-        to={`/active_ride?user_id=${id}`}
-      >
+      <ListItemButton style={style} key={index} disableGutters>
         <ListItemAvatar>
           <Avatar src={photoUrl} alt={name} />
         </ListItemAvatar>
