@@ -1,3 +1,5 @@
+/* eslint-disable import/no-cycle */
+
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import {
@@ -26,6 +28,9 @@ const authenticationSlice = createSlice({
     setAuthData: (state, action: PayloadAction<AuthData>) => {
       state.authData = action.payload;
     },
+    logout: (state) => {
+      state.authData = undefined;
+    },
   },
   extraReducers: (builder) => {
     builder.addMatcher(
@@ -45,4 +50,4 @@ const authenticationSlice = createSlice({
 
 export default authenticationSlice.reducer;
 
-export const { setAuthData } = authenticationSlice.actions;
+export const { setAuthData, logout } = authenticationSlice.actions;
