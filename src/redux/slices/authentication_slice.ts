@@ -1,20 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import {
-  publicAuthenticationApi,
   protectedAuthenticationApi,
+  publicAuthenticationApi,
 } from '@redux/queries/authentication';
 
-export interface EmitterAuthData {
+export interface AuthData {
   accessToken: string;
-  emitterId: string;
-  engineerId: string;
-  carId: string;
-  activatedAt: string;
+  refreshToken: string;
+  userId: string;
 }
 
 export interface AuthenticationState {
-  authData?: EmitterAuthData;
+  authData?: AuthData;
 }
 
 const initialState: AuthenticationState = {
@@ -25,20 +23,20 @@ const authenticationSlice = createSlice({
   name: 'authentication',
   initialState,
   reducers: {
-    setAuthData: (state, action: PayloadAction<EmitterAuthData>) => {
+    setAuthData: (state, action: PayloadAction<AuthData>) => {
       state.authData = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder.addMatcher(
-      publicAuthenticationApi.endpoints.register.matchFulfilled,
+      publicAuthenticationApi.endpoints.signIn.matchFulfilled,
       (state, { payload }) => {
         state.authData = payload;
       },
     );
     builder.addMatcher(
-      protectedAuthenticationApi.endpoints.deactivate.matchFulfilled,
-      (state, { payload }) => {
+      protectedAuthenticationApi.endpoints.logout.matchFulfilled,
+      (state) => {
         state.authData = undefined;
       },
     );
