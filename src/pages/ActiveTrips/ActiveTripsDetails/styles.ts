@@ -14,5 +14,6 @@ export const DetailsGrid = css`
 
 export const CloseButton = css`
   position: absolute !important;
-  right: 10px;
+  top: 2px;
+  right: 5px;
 `;

@@ -1,14 +1,12 @@
 import { FC } from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import { skipToken } from '@reduxjs/toolkit/query';
+import { FetchErrorAlert } from 'run-and-drive-lib/components';
 import { BindingAction } from 'run-and-drive-lib/models';
-import { getErrorMessage } from 'run-and-drive-lib/redux';
 import { ONE_SECOND, TEN_MINUTES } from 'run-and-drive-lib/utils';
 
 import { CarSkeleton } from '@pages/ActiveTrips/ActiveTripsDetails/CarDetails';
@@ -52,10 +50,7 @@ const ActiveTripsDetails: FC<Props> = ({ tripId, onClose }) => {
   if (tripError) {
     return (
       <Paper css={DetailsWrapper}>
-        <Alert severity="error">
-          <AlertTitle>Cannot load trip</AlertTitle>
-          {getErrorMessage(tripError)}
-        </Alert>
+        <FetchErrorAlert title="Cannot load trip" error={tripError} />
       </Paper>
     );
   }

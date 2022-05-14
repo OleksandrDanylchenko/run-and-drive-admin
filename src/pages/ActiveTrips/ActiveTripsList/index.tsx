@@ -3,7 +3,6 @@ import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
 
 import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
@@ -11,9 +10,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import { SkeletonLines } from 'run-and-drive-lib/components';
+import { FetchErrorAlert, SkeletonLines } from 'run-and-drive-lib/components';
 import { BindingCallback1 } from 'run-and-drive-lib/models';
-import { getErrorMessage } from 'run-and-drive-lib/redux';
 import { stringAvatar, timeToHumanAndRelative } from 'run-and-drive-lib/utils';
 
 import { useAppSelector } from '@redux/hooks';
@@ -69,10 +67,7 @@ const ActiveTripsList: FC<Props> = ({ onTripClick }) => {
       </Typography>
       <Box css={AutoSizerWrapper}>
         {tripsError && (
-          <Alert severity="error">
-            <AlertTitle>Cannot load active trips</AlertTitle>
-            {getErrorMessage(tripsError)}
-          </Alert>
+          <FetchErrorAlert title="Cannot load active trips" error={tripsError} />
         )}
         {!tripsError && isTripsLoading && <SkeletonLines linesNumber={7} height={50} />}
         {!tripsError && !isTripsLoading && !activeTrips.length && (

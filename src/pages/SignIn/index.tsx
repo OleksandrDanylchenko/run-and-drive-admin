@@ -6,8 +6,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import LoadingButton from '@mui/lab/LoadingButton';
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
 import Button from '@mui/material/Button';
 import Collapse from '@mui/material/Collapse';
 import Container from '@mui/material/Container';
@@ -16,8 +14,7 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { PasswordInput } from 'run-and-drive-lib/components';
-import { getErrorMessage } from 'run-and-drive-lib/redux';
+import { FetchErrorAlert, PasswordInput } from 'run-and-drive-lib/components';
 import { emailSchema, isEmpty, passwordSchema } from 'run-and-drive-lib/utils';
 import * as yup from 'yup';
 
@@ -93,12 +90,7 @@ const SignIn: FC = () => {
             {...register('password', { required: true })}
           />
           <Collapse in={!!error}>
-            <Alert severity="error">
-              <>
-                <AlertTitle>Authentication failed</AlertTitle>
-                {getErrorMessage(error)}
-              </>
-            </Alert>
+            <FetchErrorAlert title="Authentication failed" error={error} />
           </Collapse>
           <Stack direction="row" alignItems="center" justifyContent="end" spacing={2}>
             <Fade in={isDirty && !isLoading}>
