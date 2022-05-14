@@ -37,13 +37,29 @@ const ActiveTripsMap: FC<Props> = ({ onTripClick }) => {
     markersOverlay.setMap(mapInstance);
   }, [mapInstance]);
 
+  const handleMarkerClick = ({
+    tripId,
+    location,
+  }: {
+    tripId: string;
+    location: google.maps.LatLngLiteral;
+  }) => {
+    onTripClick(tripId);
+    mapInstance?.panTo(location);
+    mapInstance?.setZoom(15);
+  };
+
   return (
     <Paper css={MapWrapper}>
       <GoogleMap apiKey={GOOGLE_MAPS_KEY} onMapLoad={setMapInstance} css={Map}>
         {mapInstance && (
           <>
             {activeTripsIds.map((tripId) => (
-              <ActiveTripMarker key={tripId} tripId={tripId} onTripClick={onTripClick} />
+              <ActiveTripMarker
+                key={tripId}
+                tripId={tripId}
+                onTripClick={handleMarkerClick}
+              />
             ))}
           </>
         )}

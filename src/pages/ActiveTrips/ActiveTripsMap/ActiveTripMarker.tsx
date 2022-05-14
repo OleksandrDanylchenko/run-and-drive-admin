@@ -11,7 +11,7 @@ import { selectTripById } from '@redux/queries/trips';
 
 interface Props {
   tripId: string;
-  onTripClick: BindingCallback1<string>;
+  onTripClick: BindingCallback1<{ tripId: string; location: google.maps.LatLngLiteral }>;
 }
 
 const ActiveTripMarker: FC<Props> = ({ tripId, onTripClick }) => {
@@ -47,9 +47,9 @@ const ActiveTripMarker: FC<Props> = ({ tripId, onTripClick }) => {
   }, [trip]);
 
   const handleMarkerClick = useCallback(() => {
-    if (!trip?.id) return;
-    onTripClick(trip?.id);
-  }, [onTripClick, trip?.id]);
+    if (!trip?.id || !position) return;
+    onTripClick({ tripId: trip?.id, location: position });
+  }, [onTripClick, trip?.id, position]);
 
   return position ? (
     <Marker position={position} icon={iconMarker} onClick={handleMarkerClick} />
