@@ -6,6 +6,7 @@ const oleksandrUser: User = {
   surname: 'Danylchenko',
   email: 'oleksa@gmail.com',
   photoUrl: 'https://i.kym-cdn.com/photos/images/original/001/250/216/305.jpg',
+  phone: '1521',
 };
 
 export const users: User[] = new Array(40).fill(true).map(() => oleksandrUser);

@@ -1,5 +1,3 @@
-/* eslint-disable import/no-cycle */
-
 import {
   BaseQueryFn,
   createApi,
@@ -14,8 +12,9 @@ import {
   selectAccessToken,
   selectRefreshToken,
 } from '@redux/selectors/authentication_selectors';
-import { AuthData, logout, setAuthData } from '@redux/slices/authentication_slice';
+import { logout, setAuthData } from '@redux/slices/authentication_actions';
 
+import type { AuthData } from '@redux/slices/authentication_slice';
 import type { RootState } from '@redux/store';
 
 const publicBaseQuery = fetchBaseQuery({ baseUrl: API_HOST });
