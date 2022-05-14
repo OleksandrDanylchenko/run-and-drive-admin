@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo } from 'react';
+import { FC, useCallback, useMemo, useEffect } from 'react';
 
 import { Marker } from '@react-google-maps/api';
 import { mapsConstants } from 'run-and-drive-lib/components';
@@ -9,12 +9,15 @@ import { useAppSelector } from '@redux/hooks';
 import { useGetLastTripRecordQuery } from '@redux/queries/sensors';
 import { selectTripById } from '@redux/queries/trips';
 
+export type CallbackProps = { tripId: string; location: google.maps.LatLngLiteral };
+
 interface Props {
   tripId: string;
-  onTripClick: BindingCallback1<{ tripId: string; location: google.maps.LatLngLiteral }>;
+  onLocationUpdate: BindingCallback1<CallbackProps>;
+  onTripClick: BindingCallback1<CallbackProps>;
 }
 
-const ActiveTripMarker: FC<Props> = ({ tripId, onTripClick }) => {
+const ActiveTripMarker: FC<Props> = ({ tripId, onLocationUpdate, onTripClick }) => {
   const trip = useAppSelector((state) => selectTripById(state, tripId));
   const { data: lastRecord } = useGetLastTripRecordQuery(tripId, {
     pollingInterval: ONE_SECOND,
@@ -29,6 +32,11 @@ const ActiveTripMarker: FC<Props> = ({ tripId, onTripClick }) => {
     }
     return null;
   }, [lastRecord, trip]);
+
+  useEffect(() => {
+    if (!position) return;
+    onLocationUpdate({ tripId, location: position });
+  }, [tripId, position, onLocationUpdate]);
 
   const iconMarker = useMemo(() => {
     if (!trip) return;

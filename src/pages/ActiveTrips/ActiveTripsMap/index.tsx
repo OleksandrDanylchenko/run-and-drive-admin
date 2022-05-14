@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState, useMemo } from 'react';
 
 import Paper from '@mui/material/Paper';
 import { GoogleMap } from 'run-and-drive-lib/components';
@@ -11,6 +11,8 @@ import { Map, MapWrapper } from '@pages/ActiveTrips/ActiveTripsMap/styles';
 import { useAppSelector } from '@redux/hooks';
 import { selectTripsIds } from '@redux/queries/trips';
 
+import type { CallbackProps } from '@pages/ActiveTrips/ActiveTripsMap/ActiveTripMarker';
+
 interface Props {
   onTripClick: BindingCallback1<string>;
 }
@@ -19,6 +21,7 @@ const ActiveTripsMap: FC<Props> = ({ onTripClick }) => {
   const activeTripsIds = useAppSelector(selectTripsIds) as string[];
 
   const [mapInstance, setMapInstance] = useState<google.maps.Map>();
+  const [followingTripId, setFollowingTripId] = useState<string>();
 
   useEffect(() => {
     if (!mapInstance) return;
@@ -37,27 +40,40 @@ const ActiveTripsMap: FC<Props> = ({ onTripClick }) => {
     markersOverlay.setMap(mapInstance);
   }, [mapInstance]);
 
-  const handleMarkerClick = ({
-    tripId,
-    location,
-  }: {
-    tripId: string;
-    location: google.maps.LatLngLiteral;
-  }) => {
+  const handleMarkerClick = ({ tripId, location }: CallbackProps) => {
     onTripClick(tripId);
+    setFollowingTripId(tripId);
     mapInstance?.panTo(location);
     mapInstance?.setZoom(15);
   };
 
+  const handleMarkerLocationUpdate = ({ tripId, location }: CallbackProps) => {
+    if (followingTripId !== tripId) return;
+    mapInstance?.panTo(location);
+  };
+
+  const mapProps = useMemo(
+    () => ({
+      onDragStart: () => setFollowingTripId(undefined),
+    }),
+    [],
+  );
+
   return (
     <Paper css={MapWrapper}>
-      <GoogleMap apiKey={GOOGLE_MAPS_KEY} onMapLoad={setMapInstance} css={Map}>
+      <GoogleMap
+        apiKey={GOOGLE_MAPS_KEY}
+        onMapLoad={setMapInstance}
+        mapProps={mapProps}
+        css={Map}
+      >
         {mapInstance && (
           <>
             {activeTripsIds.map((tripId) => (
               <ActiveTripMarker
                 key={tripId}
                 tripId={tripId}
+                onLocationUpdate={handleMarkerLocationUpdate}
                 onTripClick={handleMarkerClick}
               />
             ))}
