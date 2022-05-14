@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-import { Theme } from '@mui/material';
 import { flexbox, pxToRem } from 'run-and-drive-lib/styles';
 
 export const HeaderToolbar = css`
@@ -13,24 +12,8 @@ export const HeaderTitle = css`
   font-weight: 500;
 `;
 
-export const AccountButton = css`
+export const ProfileButton = css`
   text-transform: inherit;
   color: inherit;
   gap: 10px;
-`;
-
-export const AccountAvatar = (theme: Theme) => css`
-  --size: 0;
-
-  width: var(--size);
-  height: var(--size);
-  background-color: ${theme.palette.info.dark};
-
-  &.header {
-    --size: 32px;
-  }
-
-  &.list {
-    --size: 25px;
-  }
 `;

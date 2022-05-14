@@ -21,7 +21,7 @@ import { useAppSelector } from '@redux/hooks';
 import { useGetUserByIdQuery, useLogoutMutation } from '@redux/queries/authentication';
 import { selectUserId } from '@redux/selectors/authentication_selectors';
 
-import { AccountButton, HeaderTitle, HeaderToolbar } from './styles';
+import { ProfileButton, HeaderTitle, HeaderToolbar } from './styles';
 
 const Header: FC = () => {
   const { element, handleClick, handleClose } = useEventElement();
@@ -68,21 +68,21 @@ const Header: FC = () => {
           <MapIcon />
           Run & Drive
         </Typography>
-        <Tooltip title="Account settings">
+        <Tooltip title="Profile settings">
           <LoadingButton
-            aria-controls={menuOpen ? 'account-menu' : undefined}
+            aria-controls={menuOpen ? 'profile-menu' : undefined}
             aria-haspopup="true"
             aria-expanded={menuOpen ? 'true' : undefined}
             onClick={handleClick}
             disabled={!isEmpty(userError)}
             loading={isUserLoading}
-            css={AccountButton}
+            css={ProfileButton}
           >
             {profileElement}
           </LoadingButton>
         </Tooltip>
       </Toolbar>
-      <Menu anchorEl={element} id="account-menu" open={menuOpen} onClose={handleClose}>
+      <Menu anchorEl={element} id="profile-menu" open={menuOpen} onClose={handleClose}>
         <MenuItem>
           <ListItemIcon>
             <AccountCircleIcon />
