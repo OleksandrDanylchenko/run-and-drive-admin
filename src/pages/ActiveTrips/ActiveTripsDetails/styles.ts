@@ -3,6 +3,7 @@ import { pxToRem } from 'run-and-drive-lib/styles';
 
 export const DetailsWrapper = css`
   position: relative;
+  overflow-y: scroll;
   height: 100%;
 `;
 
@@ -16,4 +17,5 @@ export const CloseButton = css`
   position: absolute !important;
   top: 2px;
   right: 5px;
+  z-index: 1;
 `;

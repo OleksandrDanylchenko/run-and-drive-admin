@@ -8,6 +8,7 @@ import { FetchErrorAlert } from 'run-and-drive-lib/components';
 import { TEN_MINUTES } from 'run-and-drive-lib/utils';
 
 import CarSkeleton from '@pages/ActiveTrips/ActiveTripsDetails/CarDetails/CarSkeleton';
+import CharacteristicsCard from '@pages/ActiveTrips/ActiveTripsDetails/CarDetails/CharacteristicsCard';
 import IndicatorsCard from '@pages/ActiveTrips/ActiveTripsDetails/CarDetails/IndicatorsCard';
 import { useGetCarByIdQuery } from '@redux/queries/cars';
 
@@ -31,7 +32,7 @@ const CarDetails: FC<Props> = ({ carId, tripId }) => {
   const { brand, model, year, photosUrls } = car;
 
   return (
-    <Stack spacing={3}>
+    <Stack spacing={3} sx={{ paddingTop: '35px' }}>
       {photosUrls.length > 0 && (
         <Carousel
           ariaLabel={`${brand} ${model}, ${year}`}
@@ -47,6 +48,7 @@ const CarDetails: FC<Props> = ({ carId, tripId }) => {
         </Carousel>
       )}
       <IndicatorsCard car={car} tripId={tripId} />
+      <CharacteristicsCard car={car} />
     </Stack>
   );
 };
