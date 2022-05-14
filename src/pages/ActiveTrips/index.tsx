@@ -14,10 +14,16 @@ const ActiveTrips: FC = () => {
   });
 
   const [detailsTripId, setDetailsTripId] = useState<string>();
+  const [followingTripId, setFollowingTripId] = useState<string>();
+
   const handleTripClick = (tripId: string) => {
-    if (detailsTripId === tripId) return;
     setDetailsTripId(tripId);
+    setFollowingTripId(tripId);
   };
+  const handleMapDrag = () => {
+    setFollowingTripId(undefined);
+  };
+
   const handleDetailsClose = () => {
     setDetailsTripId(undefined);
   };
@@ -25,7 +31,13 @@ const ActiveTrips: FC = () => {
   return (
     <Dashboard
       sidebar={<ActiveTripsList onTripClick={handleTripClick} />}
-      map={<ActiveTripsMap onTripClick={handleTripClick} />}
+      map={
+        <ActiveTripsMap
+          onTripClick={handleTripClick}
+          followingTripId={followingTripId}
+          onMapDrag={handleMapDrag}
+        />
+      }
       info={
         detailsTripId && (
           <ActiveTripsDetails tripId={detailsTripId} onClose={handleDetailsClose} />
