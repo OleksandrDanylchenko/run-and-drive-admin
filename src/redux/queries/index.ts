@@ -38,7 +38,6 @@ const accessTokenQuery = fetchBaseQuery({
 
 const refreshTokenQuery = fetchBaseQuery({
   baseUrl: API_HOST,
-  method: 'POST',
   prepareHeaders: (headers, { getState }) => {
     const refreshToken = selectRefreshToken(getState() as RootState);
     if (refreshToken) {
@@ -67,7 +66,10 @@ const protectedBaseQuery: BaseQueryFn<
   if (result.error && result.error.status === 401) {
     // try to get a new token
     const refreshResult = (await refreshTokenQuery(
-      API.REFRESH_TOKEN,
+      {
+        url: API.REFRESH_TOKEN,
+        method: 'POST',
+      },
       api,
       extraOptions,
     )) as { data: AuthData };
