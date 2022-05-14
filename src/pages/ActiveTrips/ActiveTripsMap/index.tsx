@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import Paper from '@mui/material/Paper';
 import { GoogleMap } from 'run-and-drive-lib/components';
@@ -9,14 +9,14 @@ import { HOME_LOCATION } from '@constants/map';
 import ActiveTripMarker from '@pages/ActiveTrips/ActiveTripsMap/ActiveTripMarker';
 import { Map, MapWrapper } from '@pages/ActiveTrips/ActiveTripsMap/styles';
 import { useAppSelector } from '@redux/hooks';
-import { selectAllTrips } from '@redux/queries/trips';
+import { selectTripsIds } from '@redux/queries/trips';
 
 interface Props {
   onTripClick: BindingCallback1<string>;
 }
 
 const ActiveTripsMap: FC<Props> = ({ onTripClick }) => {
-  const activeTrips = useAppSelector(selectAllTrips);
+  const activeTripsIds = useAppSelector(selectTripsIds) as string[];
 
   const [mapInstance, setMapInstance] = useState<google.maps.Map>();
 
@@ -42,7 +42,7 @@ const ActiveTripsMap: FC<Props> = ({ onTripClick }) => {
       <GoogleMap apiKey={GOOGLE_MAPS_KEY} onMapLoad={setMapInstance} css={Map}>
         {mapInstance && (
           <>
-            {activeTrips.map(({ id: tripId }) => (
+            {activeTripsIds.map((tripId) => (
               <ActiveTripMarker key={tripId} tripId={tripId} onTripClick={onTripClick} />
             ))}
           </>

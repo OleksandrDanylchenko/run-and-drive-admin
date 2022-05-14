@@ -18,7 +18,8 @@ import { useEventElement } from 'run-and-drive-lib/hooks';
 import { isEmpty, stringAvatar } from 'run-and-drive-lib/utils';
 
 import { useAppSelector } from '@redux/hooks';
-import { useGetUserByIdQuery, useLogoutMutation } from '@redux/queries/authentication';
+import { useLogoutMutation } from '@redux/queries/authentication';
+import { useGetUserByIdQuery } from '@redux/queries/users';
 import { selectUserId } from '@redux/selectors/authentication_selectors';
 
 import { ProfileButton, HeaderTitle, HeaderToolbar } from './styles';

@@ -1,5 +1,3 @@
-import { User } from 'run-and-drive-lib/models';
-
 import { SignInPayload } from '@models/api';
 import { protectedEmitterApi, publicEmitterApi } from '@redux/queries';
 import { API } from '@redux/queries/api_routes';
@@ -29,13 +27,8 @@ export const protectedAuthenticationApi = protectedEmitterApi.injectEndpoints({
         method: 'POST',
       }),
     }),
-    getUserById: build.query<User, string>({
-      query: (userId) => ({
-        url: API.GET_USER_BY_ID(userId),
-      }),
-    }),
   }),
   overrideExisting: false,
 });
 
-export const { useLogoutMutation, useGetUserByIdQuery } = protectedAuthenticationApi;
+export const { useLogoutMutation } = protectedAuthenticationApi;

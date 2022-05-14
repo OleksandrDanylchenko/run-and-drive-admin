@@ -18,12 +18,19 @@ const ActiveTrips: FC = () => {
     if (detailsTripId === tripId) return;
     setDetailsTripId(tripId);
   };
+  const handleDetailsClose = () => {
+    setDetailsTripId(undefined);
+  };
 
   return (
     <Dashboard
       sidebar={<ActiveTripsList onTripClick={handleTripClick} />}
       map={<ActiveTripsMap onTripClick={handleTripClick} />}
-      info={detailsTripId && <ActiveTripsDetails tripId={detailsTripId} />}
+      info={
+        detailsTripId && (
+          <ActiveTripsDetails tripId={detailsTripId} onClose={handleDetailsClose} />
+        )
+      }
     />
   );
 };

@@ -16,12 +16,12 @@ const Dashboard: FC<Props> = ({ sidebar, map, info }) => {
       <Grid item xs={5} sm={5} md={4} lg={3}>
         {sidebar}
       </Grid>
-      <Grid item container xs spacing={2}>
-        <Grid item xs={12}>
+      <Grid item container xs direction="column" spacing={2}>
+        <Grid item xs={info ? 4 : 12}>
           {map}
         </Grid>
         {info && (
-          <Grid item xs={12}>
+          <Grid item xs={8}>
             {info}
           </Grid>
         )}

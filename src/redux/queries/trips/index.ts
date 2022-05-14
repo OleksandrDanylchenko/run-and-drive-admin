@@ -25,6 +25,11 @@ export const tripsApi = protectedEmitterApi.injectEndpoints({
       }),
       transformResponse: transformTrips,
     }),
+    getTripById: build.query<Trip, string>({
+      query: (tripId) => ({
+        url: API.GET_TRIP_BY_ID(tripId),
+      }),
+    }),
   }),
   overrideExisting: false,
 });
@@ -47,4 +52,4 @@ export const {
   (state: RootState) => selectTripsData(state) || tripsInitialState,
 );
 
-export const { useGetActiveTripsQuery } = tripsApi;
+export const { useGetActiveTripsQuery, useGetTripByIdQuery } = tripsApi;
