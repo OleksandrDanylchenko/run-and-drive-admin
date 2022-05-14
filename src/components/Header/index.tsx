@@ -1,11 +1,11 @@
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Logout from '@mui/icons-material/Logout';
 import MapIcon from '@mui/icons-material/Map';
-import Settings from '@mui/icons-material/Settings';
+import LoadingButton from '@mui/lab/LoadingButton';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Menu from '@mui/material/Menu';
@@ -13,17 +13,44 @@ import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
+import { skipToken } from '@reduxjs/toolkit/query';
 import { useEventElement } from 'run-and-drive-lib/hooks';
+import { isEmpty, stringAvatar } from 'run-and-drive-lib/utils';
 
-import { AccountAvatar, AccountButton, HeaderTitle, HeaderToolbar } from './styles';
+import { useAppSelector } from '@redux/hooks';
+import { useGetUserByIdQuery } from '@redux/queries/authentication';
+import { selectUserId } from '@redux/selectors/authentication_selectors';
+
+import { AccountButton, HeaderTitle, HeaderToolbar } from './styles';
 
 const Header: FC = () => {
   const { element, handleClick, handleClose } = useEventElement();
   const menuOpen = Boolean(element);
 
-  const getAvatar = (type: 'header' | 'list') => (
-    <Avatar src="/test-image" alt="Oleksandr" css={AccountAvatar} className={type} />
-  );
+  const userId = useAppSelector(selectUserId);
+  const {
+    data: user,
+    isLoading: isUserLoading,
+    error: userError,
+  } = useGetUserByIdQuery(userId || skipToken);
+
+  const profileElement = useMemo(() => {
+    if (!user) return null;
+
+    const { name, surname, photoUrl } = user;
+    const fullName = `${name} ${surname}`;
+
+    return (
+      <>
+        <Avatar
+          {...stringAvatar(fullName)}
+          src={photoUrl}
+          sx={{ width: 35, height: 35 }}
+        />
+        {name} {surname[0]}.
+      </>
+    );
+  }, [user]);
 
   return (
     <AppBar position="static">
@@ -33,16 +60,18 @@ const Header: FC = () => {
           Run & Drive
         </Typography>
         <Tooltip title="Account settings">
-          <Button
+          <LoadingButton
             aria-controls={menuOpen ? 'account-menu' : undefined}
             aria-haspopup="true"
             aria-expanded={menuOpen ? 'true' : undefined}
             onClick={handleClick}
+            disabled={!isEmpty(userError)}
+            loading={isUserLoading}
+            loadingPosition="end"
             css={AccountButton}
           >
-            Oleksandr D.
-            {getAvatar('header')}
-          </Button>
+            {profileElement}
+          </LoadingButton>
         </Tooltip>
       </Toolbar>
       <Menu
@@ -53,15 +82,12 @@ const Header: FC = () => {
         onClick={handleClose}
       >
         <MenuItem>
-          <ListItemIcon>{getAvatar('list')}</ListItemIcon> My Profile
+          <ListItemIcon>
+            <AccountCircleIcon />
+          </ListItemIcon>
+          My Profile
         </MenuItem>
         <Divider />
-        <MenuItem>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
         <MenuItem>
           <ListItemIcon>
             <Logout fontSize="small" />

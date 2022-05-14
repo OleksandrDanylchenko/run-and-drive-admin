@@ -18,7 +18,7 @@ const Routing: FC = () => {
         <Route element={<ProtectedRoute isAllowed={!authData} redirectPath="/" />}>
           <Route path="/signin" element={<SignIn />} />
         </Route>
-        <Route element={<ProtectedRoute isAllowed={!!authData} redirectPath="/login" />}>
+        <Route element={<ProtectedRoute isAllowed={!!authData} redirectPath="/signin" />}>
           <Route path="/" element={<Home />}>
             <Route index element={<ActiveTrips />} />
           </Route>
