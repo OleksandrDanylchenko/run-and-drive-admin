@@ -3,7 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { ProtectedRoute } from 'run-and-drive-lib/router';
 
-import Dashboard from '@pages/Dashboard';
+import ActiveTrips from '@pages/ActiveTrips';
 import Home from '@pages/Home';
 
 const Routing: FC = () => (
@@ -14,7 +14,7 @@ const Routing: FC = () => (
       </Route>
       <Route element={<ProtectedRoute isAllowed={false} redirectPath="/login" />}>
         <Route path="/" element={<Home />}>
-          <Route index element={<Dashboard />} />
+          <Route index element={<ActiveTrips />} />
         </Route>
       </Route>
       <Route element={<Navigate to="/" />} />

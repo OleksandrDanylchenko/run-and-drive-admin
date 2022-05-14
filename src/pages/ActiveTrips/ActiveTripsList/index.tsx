@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import { users } from './mockUsers';
 import { AutoSizerWrapper, ListHeader, ListWrapper } from './styles';
 
-const ActiveRidesList: FC = () => {
+const ActiveTripsList: FC = () => {
   const renderListElement = useCallback((props: ListChildComponentProps) => {
     const { index, style } = props;
     const { name, surname, email, photoUrl } = users[index];
@@ -55,4 +55,4 @@ const ActiveRidesList: FC = () => {
   );
 };
 
-export default ActiveRidesList;
+export default ActiveTripsList;
