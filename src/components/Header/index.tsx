@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react';
+import { FC, useMemo, useState } from 'react';
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Logout from '@mui/icons-material/Logout';
@@ -33,6 +33,11 @@ const Header: FC = () => {
     isLoading: isUserLoading,
     error: userError,
   } = useGetUserByIdQuery(userId || skipToken);
+
+  const [isLogoutOpen, setLogoutOpen] = useState(false);
+  const toggleLogout = () => {
+    setLogoutOpen((logoutOpen) => !logoutOpen);
+  };
 
   const profileElement = useMemo(() => {
     if (!user) return null;
@@ -74,13 +79,7 @@ const Header: FC = () => {
           </LoadingButton>
         </Tooltip>
       </Toolbar>
-      <Menu
-        anchorEl={element}
-        id="account-menu"
-        open={menuOpen}
-        onClose={handleClose}
-        onClick={handleClose}
-      >
+      <Menu anchorEl={element} id="account-menu" open={menuOpen} onClose={handleClose}>
         <MenuItem>
           <ListItemIcon>
             <AccountCircleIcon />
@@ -88,7 +87,7 @@ const Header: FC = () => {
           My Profile
         </MenuItem>
         <Divider />
-        <MenuItem>
+        <MenuItem onClick={toggleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
