@@ -67,7 +67,7 @@ const ActiveTripsList: FC = () => {
             {getErrorMessage(tripsError)}
           </Alert>
         )}
-        {!tripsError && isTripsLoading && <SkeletonLines linesNumber={7} />}
+        {!tripsError && isTripsLoading && <SkeletonLines linesNumber={7} height={50} />}
         {!tripsError && !isTripsLoading && !activeTrips.length && (
           <Alert variant="outlined" severity="info">
             There are no active rides right now
