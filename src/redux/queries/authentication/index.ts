@@ -1,5 +1,3 @@
-/* eslint-disable import/no-cycle */
-
 import { User } from 'run-and-drive-lib/models';
 
 import { SignInPayload } from '@models/api';

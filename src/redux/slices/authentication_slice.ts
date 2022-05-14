@@ -1,11 +1,10 @@
-/* eslint-disable import/no-cycle */
-
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 import {
   protectedAuthenticationApi,
   publicAuthenticationApi,
 } from '@redux/queries/authentication';
+import { logout, setAuthData } from '@redux/slices/authentication_actions';
 
 export interface AuthData {
   accessToken: string;
@@ -24,15 +23,14 @@ const initialState: AuthenticationState = {
 const authenticationSlice = createSlice({
   name: 'authentication',
   initialState,
-  reducers: {
-    setAuthData: (state, action: PayloadAction<AuthData>) => {
-      state.authData = action.payload;
-    },
-    logout: (state) => {
-      state.authData = undefined;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(setAuthData, (state, action) => {
+      state.authData = action.payload;
+    });
+    builder.addCase(logout, (state) => {
+      state.authData = undefined;
+    });
     builder.addMatcher(
       publicAuthenticationApi.endpoints.signIn.matchFulfilled,
       (state, { payload }) => {
@@ -49,5 +47,3 @@ const authenticationSlice = createSlice({
 });
 
 export default authenticationSlice.reducer;
-
-export const { setAuthData, logout } = authenticationSlice.actions;
