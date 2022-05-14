@@ -2,10 +2,7 @@ import { css } from '@emotion/react';
 import { Theme } from '@mui/material';
 import { flexbox, pxToRem } from 'run-and-drive-lib/styles';
 
-import { headerHeight } from '@styles/constants';
-
 export const HeaderToolbar = css`
-  height: ${headerHeight};
   justify-content: space-between;
   gap: 10px;
 `;

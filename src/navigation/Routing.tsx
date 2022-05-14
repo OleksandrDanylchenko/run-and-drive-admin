@@ -12,7 +12,7 @@ const Routing: FC = () => (
       <Route element={<ProtectedRoute isAllowed={true} redirectPath="/" />}>
         <Route path="/login" element={<h2>Hello, login screen!</h2>} />
       </Route>
-      <Route element={<ProtectedRoute isAllowed={false} redirectPath="/login" />}>
+      <Route element={<ProtectedRoute isAllowed={true} redirectPath="/login" />}>
         <Route path="/" element={<Home />}>
           <Route index element={<ActiveTrips />} />
         </Route>
