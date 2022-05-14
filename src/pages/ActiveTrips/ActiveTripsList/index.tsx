@@ -28,22 +28,27 @@ const ActiveTripsList: FC = () => {
     (props: ListChildComponentProps) => {
       const { index, style } = props;
       const {
-        car: { model, brand, year, photosUrls },
+        user: { name, surname, photoUrl },
         start: { time },
       } = activeTrips[index];
-      const carFullName = `${model} ${brand}, ${year}`;
+      const userFullName = `${name} ${surname}`;
       const { relative } = timeToHumanAndRelative(time);
 
       return (
-        <ListItemButton style={style} key={index} disableGutters>
+        <ListItemButton
+          style={style}
+          key={index}
+          disableGutters
+          sx={{ paddingLeft: '5px', borderRadius: '5px' }}
+        >
           <ListItemAvatar>
             <Avatar
-              {...stringAvatar(carFullName)}
-              src={photosUrls[0]}
-              sx={{ width: 24, height: 24 }}
+              {...stringAvatar(userFullName)}
+              src={photoUrl}
+              sx={{ width: 40, height: 40 }}
             />
           </ListItemAvatar>
-          <ListItemText primary={carFullName} secondary={`Started ${relative}`} />
+          <ListItemText primary={userFullName} secondary={`Started ${relative}`} />
         </ListItemButton>
       );
     },
@@ -79,7 +84,7 @@ const ActiveTripsList: FC = () => {
                 width={width}
                 height={height}
                 itemCount={activeTrips.length}
-                itemSize={40}
+                itemSize={60}
               >
                 {renderListElement}
               </FixedSizeList>

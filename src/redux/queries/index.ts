@@ -38,6 +38,7 @@ const accessTokenQuery = fetchBaseQuery({
 
 const refreshTokenQuery = fetchBaseQuery({
   baseUrl: API_HOST,
+  method: 'POST',
   prepareHeaders: (headers, { getState }) => {
     const refreshToken = selectRefreshToken(getState() as RootState);
     if (refreshToken) {
