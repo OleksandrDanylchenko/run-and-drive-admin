@@ -2,7 +2,7 @@ import { FC, ReactNode } from 'react';
 
 import Grid from '@mui/material/Grid';
 
-import { DashboardGrid } from './styles';
+import { DashboardGrid, MapItem } from './styles';
 
 interface Props {
   sidebar: ReactNode;
@@ -17,7 +17,7 @@ const Dashboard: FC<Props> = ({ sidebar, map, info }) => {
         {sidebar}
       </Grid>
       <Grid item container xs direction="column" spacing={2}>
-        <Grid item xs={info ? 4 : 12}>
+        <Grid item xs={info ? 4 : 12} css={MapItem}>
           {map}
         </Grid>
         {info && (

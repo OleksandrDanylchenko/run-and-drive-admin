@@ -12,7 +12,7 @@ import CarDetails from '@pages/ActiveTrips/ActiveTripsDetails/CarDetails';
 import UserDetails from '@pages/ActiveTrips/ActiveTripsDetails/UserDetails';
 import { useGetTripByIdQuery } from '@redux/queries/trips';
 
-import { CloseButton, DetailsGrid, DetailsWrapper } from './styles';
+import { CloseButton, DetailsGrid, DetailsGridItem, DetailsWrapper } from './styles';
 
 interface Props {
   tripId: string;
@@ -44,10 +44,10 @@ const ActiveTripsDetails: FC<Props> = ({ tripId, onClose }) => {
         <CloseIcon fontSize="large" />
       </IconButton>
       <Grid container spacing={2} css={DetailsGrid}>
-        <Grid item xs>
+        <Grid item xs css={DetailsGridItem}>
           <UserDetails userId={trip?.user?.id} />
         </Grid>
-        <Grid item xs>
+        <Grid item xs css={DetailsGridItem}>
           <CarDetails carId={trip?.car?.id} tripId={tripId} />
         </Grid>
       </Grid>
