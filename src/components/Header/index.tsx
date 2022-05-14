@@ -18,7 +18,7 @@ import { useEventElement } from 'run-and-drive-lib/hooks';
 import { isEmpty, stringAvatar } from 'run-and-drive-lib/utils';
 
 import { useAppSelector } from '@redux/hooks';
-import { useGetUserByIdQuery } from '@redux/queries/authentication';
+import { useGetUserByIdQuery, useLogoutMutation } from '@redux/queries/authentication';
 import { selectUserId } from '@redux/selectors/authentication_selectors';
 
 import { AccountButton, HeaderTitle, HeaderToolbar } from './styles';
@@ -34,9 +34,13 @@ const Header: FC = () => {
     error: userError,
   } = useGetUserByIdQuery(userId || skipToken);
 
-  const [isLogoutOpen, setLogoutOpen] = useState(false);
-  const toggleLogout = () => {
-    setLogoutOpen((logoutOpen) => !logoutOpen);
+  const [logout] = useLogoutMutation();
+
+  const handleLogout = () => {
+    const isLogout = confirm('Are you surely want to log out from the app?');
+    if (isLogout) {
+      logout();
+    }
   };
 
   const profileElement = useMemo(() => {
@@ -72,7 +76,6 @@ const Header: FC = () => {
             onClick={handleClick}
             disabled={!isEmpty(userError)}
             loading={isUserLoading}
-            loadingPosition="end"
             css={AccountButton}
           >
             {profileElement}
@@ -87,7 +90,7 @@ const Header: FC = () => {
           My Profile
         </MenuItem>
         <Divider />
-        <MenuItem onClick={toggleLogout}>
+        <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
