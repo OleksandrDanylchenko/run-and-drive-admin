@@ -12,6 +12,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { SkeletonLines } from 'run-and-drive-lib/components';
+import { BindingCallback1 } from 'run-and-drive-lib/models';
 import { getErrorMessage } from 'run-and-drive-lib/redux';
 import { stringAvatar, timeToHumanAndRelative } from 'run-and-drive-lib/utils';
 
@@ -20,7 +21,11 @@ import { selectAllTrips, useGetActiveTripsQuery } from '@redux/queries/trips';
 
 import { AutoSizerWrapper, ListHeader, ListWrapper } from './styles';
 
-const ActiveTripsList: FC = () => {
+interface Props {
+  onTripClick: BindingCallback1<string>;
+}
+
+const ActiveTripsList: FC<Props> = ({ onTripClick }) => {
   const activeTrips = useAppSelector(selectAllTrips);
   const { isLoading: isTripsLoading, error: tripsError } = useGetActiveTripsQuery();
 
@@ -28,6 +33,7 @@ const ActiveTripsList: FC = () => {
     (props: ListChildComponentProps) => {
       const { index, style } = props;
       const {
+        id: tripId,
         user: { name, surname, photoUrl },
         start: { time },
       } = activeTrips[index];
@@ -40,6 +46,7 @@ const ActiveTripsList: FC = () => {
           key={index}
           disableGutters
           sx={{ paddingLeft: '5px', borderRadius: '5px' }}
+          onClick={() => onTripClick(tripId)}
         >
           <ListItemAvatar>
             <Avatar
@@ -52,7 +59,7 @@ const ActiveTripsList: FC = () => {
         </ListItemButton>
       );
     },
-    [activeTrips],
+    [activeTrips, onTripClick],
   );
 
   return (

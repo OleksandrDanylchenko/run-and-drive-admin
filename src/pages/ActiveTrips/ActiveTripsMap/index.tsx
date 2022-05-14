@@ -2,15 +2,20 @@ import { FC, useState, useEffect } from 'react';
 
 import Paper from '@mui/material/Paper';
 import { GoogleMap } from 'run-and-drive-lib/components';
+import { BindingCallback1 } from 'run-and-drive-lib/models';
 
 import { GOOGLE_MAPS_KEY } from '@constants/index';
 import { HOME_LOCATION } from '@constants/map';
+import ActiveTripMarker from '@pages/ActiveTrips/ActiveTripsMap/ActiveTripMarker';
 import { Map, MapWrapper } from '@pages/ActiveTrips/ActiveTripsMap/styles';
-import TripMarker from '@pages/ActiveTrips/ActiveTripsMap/TripMarker';
 import { useAppSelector } from '@redux/hooks';
 import { selectAllTrips } from '@redux/queries/trips';
 
-const ActiveTripsMap: FC = () => {
+interface Props {
+  onTripClick: BindingCallback1<string>;
+}
+
+const ActiveTripsMap: FC<Props> = ({ onTripClick }) => {
   const activeTrips = useAppSelector(selectAllTrips);
 
   const [mapInstance, setMapInstance] = useState<google.maps.Map>();
@@ -38,7 +43,7 @@ const ActiveTripsMap: FC = () => {
         {mapInstance && (
           <>
             {activeTrips.map(({ id: tripId }) => (
-              <TripMarker key={tripId} tripId={tripId} />
+              <ActiveTripMarker key={tripId} tripId={tripId} onTripClick={onTripClick} />
             ))}
           </>
         )}

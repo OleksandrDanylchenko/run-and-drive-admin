@@ -16,7 +16,7 @@ const Dashboard: FC<Props> = ({ sidebar, map, info }) => {
       <Grid item xs={5} sm={5} md={4} lg={3}>
         {sidebar}
       </Grid>
-      <Grid item container xs>
+      <Grid item container xs spacing={2}>
         <Grid item xs={12}>
           {map}
         </Grid>

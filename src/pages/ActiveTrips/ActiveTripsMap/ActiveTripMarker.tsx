@@ -1,7 +1,8 @@
-import { FC, useMemo } from 'react';
+import { FC, useCallback, useMemo } from 'react';
 
 import { Marker } from '@react-google-maps/api';
 import { mapsConstants } from 'run-and-drive-lib/components';
+import { BindingCallback1 } from 'run-and-drive-lib/models';
 import { ONE_SECOND } from 'run-and-drive-lib/utils';
 
 import { useAppSelector } from '@redux/hooks';
@@ -10,9 +11,10 @@ import { selectTripById } from '@redux/queries/trips';
 
 interface Props {
   tripId: string;
+  onTripClick: BindingCallback1<string>;
 }
 
-const TripMarker: FC<Props> = ({ tripId }) => {
+const ActiveTripMarker: FC<Props> = ({ tripId, onTripClick }) => {
   const trip = useAppSelector((state) => selectTripById(state, tripId));
   const { data: lastRecord } = useGetLastTripRecordQuery(tripId, {
     pollingInterval: ONE_SECOND,
@@ -44,7 +46,14 @@ const TripMarker: FC<Props> = ({ tripId }) => {
     };
   }, [trip]);
 
-  return position ? <Marker position={position} icon={iconMarker} /> : null;
+  const handleMarkerClick = useCallback(() => {
+    if (!trip?.id) return;
+    onTripClick(trip?.id);
+  }, [onTripClick, trip?.id]);
+
+  return position ? (
+    <Marker position={position} icon={iconMarker} onClick={handleMarkerClick} />
+  ) : null;
 };
 
-export default TripMarker;
+export default ActiveTripMarker;
