@@ -6,8 +6,8 @@ import { SkeletonLines } from 'run-and-drive-lib/components';
 
 const CarSkeleton: FC = () => (
   <Stack spacing={2}>
-    <Skeleton variant="rectangular" width="100%" height={200} />
-    <SkeletonLines linesNumber={5} />
+    <Skeleton variant="rectangular" width="96%" height={200} />
+    <SkeletonLines linesNumber={10} />
   </Stack>
 );
 

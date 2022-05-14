@@ -33,7 +33,7 @@ const UserSkeleton: FC = () => (
       <Skeleton variant="circular" width={40} height={40} />
       <Skeleton width="80%" />
     </Stack>
-    <SkeletonLines linesNumber={10} />
+    <SkeletonLines linesNumber={15} />
   </Stack>
 );
 
