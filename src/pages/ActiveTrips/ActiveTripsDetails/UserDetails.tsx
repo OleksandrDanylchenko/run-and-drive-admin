@@ -21,8 +21,8 @@ const UserDetails: FC<Props> = ({ userId }) => {
     pollingInterval: TEN_MINUTES,
   });
 
-  if (!userLoaded) return <UserSkeleton />;
   if (userError) return <FetchErrorAlert title="Cannot load user" error={userError} />;
+  if (!user || !userLoaded) return <UserSkeleton />;
 
   return <Stack>Hello user!</Stack>;
 };

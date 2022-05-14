@@ -45,7 +45,7 @@ const ActiveTripsDetails: FC<Props> = ({ tripId, onClose }) => {
       </IconButton>
       <Grid container spacing={2} css={DetailsGrid}>
         <Grid item xs>
-          <CarDetails carId={trip?.car?.id} />
+          <CarDetails carId={trip?.car?.id} tripId={tripId} />
         </Grid>
         <Grid item xs>
           <UserDetails userId={trip?.user?.id} />
