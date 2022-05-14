@@ -10,6 +10,10 @@ import {
 
 import { API_HOST } from '@constants/index';
 import { API } from '@redux/queries/api_routes';
+import {
+  selectAccessToken,
+  selectRefreshToken,
+} from '@redux/selectors/authentication_selectors';
 import { AuthData, logout, setAuthData } from '@redux/slices/authentication_slice';
 
 import type { RootState } from '@redux/store';
@@ -22,16 +26,28 @@ export const publicEmitterApi = createApi({
   endpoints: () => ({}),
 });
 
-const bearerBaseQuery = fetchBaseQuery({
+const accessTokenQuery = fetchBaseQuery({
   baseUrl: API_HOST,
   prepareHeaders: (headers, { getState }) => {
-    const { authData } = (getState() as RootState).authentication;
-    if (authData?.accessToken) {
-      headers.set('Authorization', `Bearer ${authData.accessToken}`);
+    const accessToken = selectAccessToken(getState() as RootState);
+    if (accessToken) {
+      headers.set('Authorization', `Bearer ${accessToken}`);
     }
     return headers;
   },
 });
+
+const refreshTokenQuery = fetchBaseQuery({
+  baseUrl: API_HOST,
+  prepareHeaders: (headers, { getState }) => {
+    const refreshToken = selectRefreshToken(getState() as RootState);
+    if (refreshToken) {
+      headers.set('Authorization', `Bearer ${refreshToken}`);
+    }
+    return headers;
+  },
+});
+
 const protectedBaseQuery: BaseQueryFn<
   string | FetchArgs,
   unknown,
@@ -47,17 +63,17 @@ const protectedBaseQuery: BaseQueryFn<
     window.location.replace('/error/token-missing');
   }
 
-  let result = await bearerBaseQuery(args, api, extraOptions);
+  let result = await accessTokenQuery(args, api, extraOptions);
   if (result.error && result.error.status === 401) {
     // try to get a new token
-    const refreshResult = (await publicBaseQuery(
+    const refreshResult = (await refreshTokenQuery(
       API.REFRESH_TOKEN,
       api,
       extraOptions,
     )) as { data: AuthData };
     if (refreshResult.data) {
       api.dispatch(setAuthData(refreshResult.data));
-      result = await bearerBaseQuery(args, api, extraOptions);
+      result = await accessTokenQuery(args, api, extraOptions);
     } else {
       api.dispatch(logout());
     }
