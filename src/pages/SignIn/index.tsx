@@ -33,7 +33,7 @@ const loginFormSchema = yup
   })
   .required();
 
-const Register: FC = () => {
+const SignIn: FC = () => {
   const navigate = useNavigate();
 
   const {
@@ -121,4 +121,4 @@ const Register: FC = () => {
   );
 };
 
-export default Register;
+export default SignIn;
