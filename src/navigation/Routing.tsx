@@ -5,12 +5,13 @@ import { ProtectedRoute } from 'run-and-drive-lib/router';
 
 import ActiveTrips from '@pages/ActiveTrips';
 import Home from '@pages/Home';
+import SignIn from '@pages/SignIn';
 
 const Routing: FC = () => (
   <BrowserRouter>
     <Routes>
       <Route element={<ProtectedRoute isAllowed={true} redirectPath="/" />}>
-        <Route path="/login" element={<h2>Hello, login screen!</h2>} />
+        <Route path="/signin" element={<SignIn />} />
       </Route>
       <Route element={<ProtectedRoute isAllowed={true} redirectPath="/login" />}>
         <Route path="/" element={<Home />}>
