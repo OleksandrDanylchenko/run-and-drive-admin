@@ -69,7 +69,7 @@ const ActiveTripsList: FC<Props> = ({ onTripClick }) => {
         {tripsError && (
           <FetchErrorAlert title="Cannot load active trips" error={tripsError} />
         )}
-        {!tripsError && isTripsLoading && <SkeletonLines linesNumber={7} height={50} />}
+        {!tripsError && isTripsLoading && <SkeletonLines linesNumber={7} height={40} />}
         {!tripsError && !isTripsLoading && !activeTrips.length && (
           <Alert variant="outlined" severity="info">
             There are no active rides right now

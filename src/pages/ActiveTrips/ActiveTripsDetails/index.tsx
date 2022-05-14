@@ -4,16 +4,13 @@ import CloseIcon from '@mui/icons-material/Close';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
-import { skipToken } from '@reduxjs/toolkit/query';
 import { FetchErrorAlert } from 'run-and-drive-lib/components';
 import { BindingAction } from 'run-and-drive-lib/models';
-import { ONE_SECOND, TEN_MINUTES } from 'run-and-drive-lib/utils';
+import { ONE_SECOND } from 'run-and-drive-lib/utils';
 
-import { CarSkeleton } from '@pages/ActiveTrips/ActiveTripsDetails/CarDetails';
-import { UserSkeleton } from '@pages/ActiveTrips/ActiveTripsDetails/UserDetails';
-import { useGetCarByIdQuery } from '@redux/queries/cars';
+import CarDetails from '@pages/ActiveTrips/ActiveTripsDetails/CarDetails';
+import UserDetails from '@pages/ActiveTrips/ActiveTripsDetails/UserDetails';
 import { useGetTripByIdQuery } from '@redux/queries/trips';
-import { useGetUserByIdQuery } from '@redux/queries/users';
 
 import { CloseButton, DetailsGrid, DetailsWrapper } from './styles';
 
@@ -23,28 +20,8 @@ interface Props {
 }
 
 const ActiveTripsDetails: FC<Props> = ({ tripId, onClose }) => {
-  const {
-    data: trip,
-    isLoading: isTripLoading,
-    error: tripError,
-  } = useGetTripByIdQuery(tripId, {
+  const { data: trip, error: tripError } = useGetTripByIdQuery(tripId, {
     pollingInterval: ONE_SECOND,
-  });
-
-  const {
-    data: user,
-    isSuccess: userLoaded,
-    error: userError,
-  } = useGetUserByIdQuery(trip?.user?.id || skipToken, {
-    pollingInterval: TEN_MINUTES,
-  });
-
-  const {
-    data: car,
-    isSuccess: carLoaded,
-    error: carError,
-  } = useGetCarByIdQuery(trip?.car?.id || skipToken, {
-    pollingInterval: TEN_MINUTES,
   });
 
   if (tripError) {
@@ -68,10 +45,10 @@ const ActiveTripsDetails: FC<Props> = ({ tripId, onClose }) => {
       </IconButton>
       <Grid container spacing={2} css={DetailsGrid}>
         <Grid item xs>
-          {!carLoaded && <CarSkeleton />}
+          <CarDetails carId={trip?.car?.id} />
         </Grid>
         <Grid item xs>
-          {!userLoaded && <UserSkeleton />}
+          <UserDetails userId={trip?.user?.id} />
         </Grid>
       </Grid>
     </Paper>
