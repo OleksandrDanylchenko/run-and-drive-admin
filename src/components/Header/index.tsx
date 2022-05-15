@@ -84,13 +84,6 @@ const Header: FC = () => {
         </Tooltip>
       </Toolbar>
       <Menu anchorEl={element} id="profile-menu" open={menuOpen} onClose={handleClose}>
-        <MenuItem>
-          <ListItemIcon>
-            <AccountCircleIcon />
-          </ListItemIcon>
-          My Profile
-        </MenuItem>
-        <Divider />
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
