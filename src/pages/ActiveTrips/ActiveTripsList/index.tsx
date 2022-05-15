@@ -16,6 +16,7 @@ import { stringAvatar, timeToHumanAndRelative } from 'run-and-drive-lib/utils';
 
 import { useAppSelector } from '@redux/hooks';
 import { selectAllTrips, useGetActiveTripsQuery } from '@redux/queries/trips';
+import { selectCurrentTripId } from '@redux/selectors/current_trip_selectors';
 
 import { AutoSizerWrapper, ListHeader, ListWrapper } from './styles';
 
@@ -26,6 +27,8 @@ interface Props {
 const ActiveTripsList: FC<Props> = ({ onTripClick }) => {
   const activeTrips = useAppSelector(selectAllTrips);
   const { isLoading: isTripsLoading, error: tripsError } = useGetActiveTripsQuery();
+
+  const currentTripId = useAppSelector(selectCurrentTripId);
 
   const renderListElement = useCallback(
     (props: ListChildComponentProps) => {
@@ -43,6 +46,7 @@ const ActiveTripsList: FC<Props> = ({ onTripClick }) => {
           style={style}
           key={index}
           disableGutters
+          selected={currentTripId === tripId}
           sx={{ paddingLeft: '5px', borderRadius: '5px' }}
           onClick={() => onTripClick(tripId)}
         >

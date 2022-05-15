@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { protectedAuthenticationApi } from '@redux/queries/authentication';
+
 export interface CurrentTripState {
   currentTripId?: string;
   followingTripId?: string;
@@ -20,6 +22,15 @@ const currentTripSlice = createSlice({
     setFollowingTripId: (state, action: PayloadAction<string | undefined>) => {
       state.followingTripId = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      protectedAuthenticationApi.endpoints.logout.matchFulfilled,
+      (state) => {
+        state.currentTripId = undefined;
+        state.followingTripId = undefined;
+      },
+    );
   },
 });
 

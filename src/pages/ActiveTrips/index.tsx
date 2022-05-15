@@ -17,7 +17,7 @@ import { setCurrentTripId, setFollowingTripId } from '@redux/slices/current_trip
 const ActiveTrips: FC = () => {
   const dispatch = useAppDispatch();
 
-  const detailsTripId = useAppSelector(selectCurrentTripId);
+  const currentTripId = useAppSelector(selectCurrentTripId);
   const followingTripId = useAppSelector(selectFollowingTripId);
 
   tripsApi.endpoints.getActiveTrips.useQuerySubscription(undefined, {
@@ -47,8 +47,8 @@ const ActiveTrips: FC = () => {
         />
       }
       info={
-        detailsTripId && (
-          <ActiveTripsDetails tripId={detailsTripId} onClose={handleDetailsClose} />
+        currentTripId && (
+          <ActiveTripsDetails tripId={currentTripId} onClose={handleDetailsClose} />
         )
       }
     />
