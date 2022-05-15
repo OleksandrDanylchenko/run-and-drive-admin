@@ -6,26 +6,34 @@ import Dashboard from '@components/Dashboard';
 import ActiveTripsDetails from '@pages/ActiveTrips/ActiveTripsDetails';
 import ActiveTripsList from '@pages/ActiveTrips/ActiveTripsList';
 import ActiveTripsMap from '@pages/ActiveTrips/ActiveTripsMap';
+import { useAppDispatch, useAppSelector } from '@redux/hooks';
 import { tripsApi } from '@redux/queries/trips';
+import {
+  selectCurrentTripId,
+  selectFollowingTripId,
+} from '@redux/selectors/current_trip_selectors';
+import { setCurrentTripId, setFollowingTripId } from '@redux/slices/current_trip_slice';
 
 const ActiveTrips: FC = () => {
+  const dispatch = useAppDispatch();
+
+  const detailsTripId = useAppSelector(selectCurrentTripId);
+  const followingTripId = useAppSelector(selectFollowingTripId);
+
   tripsApi.endpoints.getActiveTrips.useQuerySubscription(undefined, {
     pollingInterval: ONE_SECOND,
   });
 
-  const [detailsTripId, setDetailsTripId] = useState<string>();
-  const [followingTripId, setFollowingTripId] = useState<string>();
-
   const handleTripClick = (tripId: string) => {
-    setDetailsTripId(tripId);
-    setFollowingTripId(tripId);
+    dispatch(setCurrentTripId(tripId));
+    dispatch(setFollowingTripId(tripId));
   };
   const handleMapDrag = () => {
-    setFollowingTripId(undefined);
+    dispatch(setFollowingTripId(undefined));
   };
 
   const handleDetailsClose = () => {
-    setDetailsTripId(undefined);
+    dispatch(setCurrentTripId(undefined));
   };
 
   return (

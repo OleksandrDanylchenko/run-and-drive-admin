@@ -21,9 +21,11 @@ import { rtkQueryErrorLogger } from 'run-and-drive-lib/redux';
 import { protectedEmitterApi, publicEmitterApi } from '@redux/queries';
 
 import authenticationReducer from './slices/authentication_slice';
+import currentTripReducer from './slices/current_trip_slice';
 
 const reducers = combineReducers({
   authentication: authenticationReducer,
+  currentTrip: currentTripReducer,
   [publicEmitterApi.reducerPath]: publicEmitterApi.reducer,
   [protectedEmitterApi.reducerPath]: protectedEmitterApi.reducer,
 });
@@ -33,7 +35,7 @@ const persistedReducer = persistReducer(
     key: 'root',
     version: 1,
     storage,
-    whitelist: ['authentication'],
+    whitelist: ['authentication', 'currentTrip'],
   },
   reducers,
 );

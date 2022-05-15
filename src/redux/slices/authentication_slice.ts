@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { logout, setAuthData } from '@redux/actions/authentication_actions';
 import {
   protectedAuthenticationApi,
   publicAuthenticationApi,
 } from '@redux/queries/authentication';
-import { logout, setAuthData } from '@redux/slices/authentication_actions';
 
 export interface AuthData {
   accessToken: string;

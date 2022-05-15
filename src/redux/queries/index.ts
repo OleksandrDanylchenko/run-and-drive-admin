@@ -7,12 +7,12 @@ import {
 } from '@reduxjs/toolkit/query/react';
 
 import { API_HOST } from '@constants/index';
+import { logout, setAuthData } from '@redux/actions/authentication_actions';
 import { API } from '@redux/queries/api_routes';
 import {
   selectAccessToken,
   selectRefreshToken,
 } from '@redux/selectors/authentication_selectors';
-import { logout, setAuthData } from '@redux/slices/authentication_actions';
 
 import type { AuthData } from '@redux/slices/authentication_slice';
 import type { RootState } from '@redux/store';
