@@ -1,13 +1,14 @@
 import { FC, useCallback, useMemo, useEffect, memo } from 'react';
 
 import { Marker } from '@react-google-maps/api';
+import { skipToken } from '@reduxjs/toolkit/query';
 import { mapsConstants } from 'run-and-drive-lib/components';
 import { BindingCallback1 } from 'run-and-drive-lib/models';
 import { ONE_SECOND } from 'run-and-drive-lib/utils';
 
 import { useAppSelector } from '@redux/hooks';
 import { useGetLastTripRecordQuery } from '@redux/queries/sensors';
-import { selectTripById } from '@redux/queries/trips';
+import { selectTripById, useGetTripByIdQuery } from '@redux/queries/trips';
 
 export type CallbackProps = { tripId: string; location: google.maps.LatLngLiteral };
 
@@ -18,7 +19,10 @@ interface Props {
 }
 
 const ActiveTripMarker: FC<Props> = ({ tripId, onLocationUpdate, onTripClick }) => {
-  const trip = useAppSelector((state) => selectTripById(state, tripId));
+  const activeTrip = useAppSelector((state) => selectTripById(state, tripId));
+  const { data: queryTrip } = useGetTripByIdQuery(activeTrip ? skipToken : tripId);
+  const trip = activeTrip || queryTrip;
+
   const { data: lastRecord } = useGetLastTripRecordQuery(tripId, {
     pollingInterval: ONE_SECOND,
   });

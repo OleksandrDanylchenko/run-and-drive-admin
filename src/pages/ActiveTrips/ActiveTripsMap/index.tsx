@@ -26,7 +26,7 @@ const ActiveTripsMap: FC<Props> = ({ followingTripId, onMapDrag, onTripClick }) 
   const currentTripId = useAppSelector(selectCurrentTripId);
   const notCurrentTripsIds = useMemo(
     () => activeTripsIds.filter((id) => id !== currentTripId),
-    [currentTripId],
+    [activeTripsIds, currentTripId],
   );
 
   const [mapInstance, setMapInstance] = useState<google.maps.Map>();
