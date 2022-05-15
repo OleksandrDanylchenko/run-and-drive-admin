@@ -1,6 +1,7 @@
 import { FC, useEffect, useState, useMemo } from 'react';
 
 import Paper from '@mui/material/Paper';
+import { Polyline } from '@react-google-maps/api';
 import { GoogleMap } from 'run-and-drive-lib/components';
 import { BindingAction, BindingCallback1 } from 'run-and-drive-lib/models';
 
@@ -89,15 +90,13 @@ const ActiveTripsMap: FC<Props> = ({ followingTripId, onMapDrag, onTripClick }) 
               />
             ))}
             {currentTripId && (
-              <>
-                <ActiveTripMarker
-                  tripId={currentTripId}
-                  onLocationUpdate={handleMarkerLocationUpdate}
-                  onTripClick={handleMarkerClick}
-                />
-                <ActiveTripLine tripId={currentTripId} />
-              </>
+              <ActiveTripMarker
+                tripId={currentTripId}
+                onLocationUpdate={handleMarkerLocationUpdate}
+                onTripClick={handleMarkerClick}
+              />
             )}
+            <ActiveTripLine tripId={currentTripId} />
           </>
         )}
       </GoogleMap>

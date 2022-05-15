@@ -2,21 +2,25 @@ import { FC, memo, useMemo } from 'react';
 
 import { useTheme } from '@mui/material';
 import { Marker, Polyline } from '@react-google-maps/api';
+import { skipToken } from '@reduxjs/toolkit/query';
 import { mapsConstants } from 'run-and-drive-lib/components';
 
 import { useGetAllTripRecordsQuery } from '@redux/queries/sensors';
 
 interface Props {
-  tripId: string;
+  tripId?: string;
 }
 
 const ActiveTripLine: FC<Props> = ({ tripId }) => {
-  const { data: records, isSuccess: recordsLoaded } = useGetAllTripRecordsQuery(tripId, {
-    selectFromResult: (result) => ({
-      ...result,
-      data: result.data?.map(({ location }) => location) || [],
-    }),
-  });
+  const { data: records, isSuccess: recordsLoaded } = useGetAllTripRecordsQuery(
+    tripId || skipToken,
+    {
+      selectFromResult: (result) => ({
+        ...result,
+        data: result.data?.map(({ location }) => location) || [],
+      }),
+    },
+  );
 
   const theme = useTheme();
 
@@ -30,12 +34,16 @@ const ActiveTripLine: FC<Props> = ({ tripId }) => {
     };
   }, []);
 
-  return recordsLoaded ? (
+  const visible = recordsLoaded && !!tripId;
+  return (
     <>
-      {records[0] && <Marker position={records[0]} icon={markerIcon} />}
-      <Polyline path={records} options={{ strokeColor: theme.palette.info.main }} />
+      <Marker position={records[0]} icon={markerIcon} visible={visible} />
+      <Polyline
+        path={records}
+        options={{ strokeColor: theme.palette.info.main, visible: visible }}
+      />
     </>
-  ) : null;
+  );
 };
 
 export default memo(ActiveTripLine);

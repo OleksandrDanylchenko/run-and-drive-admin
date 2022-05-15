@@ -64,7 +64,12 @@ const ActiveTripMarker: FC<Props> = ({ tripId, onLocationUpdate, onTripClick }) 
   }, [onTripClick, trip?.id, position]);
 
   return position ? (
-    <Marker position={position} icon={iconMarker} onClick={handleMarkerClick} />
+    <Marker
+      position={position}
+      icon={iconMarker}
+      onClick={handleMarkerClick}
+      visible={!!position}
+    />
   ) : null;
 };
 
