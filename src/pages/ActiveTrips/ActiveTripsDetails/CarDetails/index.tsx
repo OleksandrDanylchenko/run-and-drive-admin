@@ -1,9 +1,8 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
-import { css } from '@emotion/react';
 import Stack from '@mui/material/Stack';
 import { skipToken } from '@reduxjs/toolkit/query';
 import { FetchErrorAlert } from 'run-and-drive-lib/components';
@@ -35,6 +34,7 @@ const CarDetails: FC<Props> = ({ carId, tripId }) => {
 
   return (
     <Stack spacing={3}>
+      <IndicatorsCard car={car} tripId={tripId} />
       {photosUrls.length > 0 && (
         <Carousel
           ariaLabel={`${brand} ${model}, ${year}`}
@@ -49,10 +49,9 @@ const CarDetails: FC<Props> = ({ carId, tripId }) => {
           ))}
         </Carousel>
       )}
-      <IndicatorsCard car={car} tripId={tripId} />
       <CharacteristicsCard car={car} />
     </Stack>
   );
 };
 
-export default CarDetails;
+export default memo(CarDetails);

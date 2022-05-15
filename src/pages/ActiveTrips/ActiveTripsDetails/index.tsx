@@ -9,6 +9,7 @@ import { BindingAction } from 'run-and-drive-lib/models';
 import { ONE_SECOND } from 'run-and-drive-lib/utils';
 
 import CarDetails from '@pages/ActiveTrips/ActiveTripsDetails/CarDetails';
+import TripDetails from '@pages/ActiveTrips/ActiveTripsDetails/TripDetails';
 import UserDetails from '@pages/ActiveTrips/ActiveTripsDetails/UserDetails';
 import { useGetTripByIdQuery } from '@redux/queries/trips';
 
@@ -45,6 +46,7 @@ const ActiveTripsDetails: FC<Props> = ({ tripId, onClose }) => {
       </IconButton>
       <Grid container spacing={2} css={DetailsGrid}>
         <Grid item xs css={DetailsGridItem}>
+          <TripDetails tripId={tripId} />
           <UserDetails userId={trip?.user?.id} />
         </Grid>
         <Grid item xs css={DetailsGridItem}>

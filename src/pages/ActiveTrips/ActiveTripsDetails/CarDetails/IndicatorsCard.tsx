@@ -57,7 +57,7 @@ const IndicatorsTable: FC<Props> = ({ car, tripId }) => {
         label: 'Fuel tank occupancy',
         value: (
           <Typography variant="body2">
-            <strong>{fuelTankOccupancy.toFixed(1)}L.</strong> / {fuelCapacity}L. <br /> (
+            <strong>{Math.trunc(fuelTankOccupancy)}L.</strong> / {fuelCapacity}L. <br /> (
             {fuelTankOccupancyPercent})
           </Typography>
         ),
