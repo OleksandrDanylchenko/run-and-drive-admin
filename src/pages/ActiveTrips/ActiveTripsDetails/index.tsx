@@ -4,6 +4,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
 import { FetchErrorAlert } from 'run-and-drive-lib/components';
 import { BindingAction } from 'run-and-drive-lib/models';
 import { ONE_SECOND } from 'run-and-drive-lib/utils';
@@ -46,8 +47,10 @@ const ActiveTripsDetails: FC<Props> = ({ tripId, onClose }) => {
       </IconButton>
       <Grid container spacing={2} css={DetailsGrid}>
         <Grid item xs css={DetailsGridItem}>
-          <TripDetails tripId={tripId} />
-          <UserDetails userId={trip?.user?.id} />
+          <Stack spacing={3}>
+            <TripDetails tripId={tripId} />
+            <UserDetails userId={trip?.user?.id} />
+          </Stack>
         </Grid>
         <Grid item xs css={DetailsGridItem}>
           <CarDetails carId={trip?.car?.id} tripId={tripId} />
