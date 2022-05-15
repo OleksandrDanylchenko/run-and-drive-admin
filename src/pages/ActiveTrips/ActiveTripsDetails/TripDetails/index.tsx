@@ -109,7 +109,7 @@ const TripDetailsTable: FC<{ trip: Trip }> = ({ trip }) => {
 
       rows.push({
         label: 'Total time',
-        value: humanizeDuration(tripDurationMs),
+        value: humanizeDuration(tripDurationMs, { round: true }),
       });
     }
 
