@@ -7,4 +7,5 @@ export const API = {
   GET_TRIPS: `/trips`,
   GET_TRIP_BY_ID: (tripId: string) => `/trips/${tripId}`,
   GET_LAST_TRIP_RECORD: (tripId: string) => `/sensors/trip/${tripId}/last`,
+  GET_ALL_TRIP_RECORDS: (tripId: string) => `/sensors/trip/${tripId}`,
 };

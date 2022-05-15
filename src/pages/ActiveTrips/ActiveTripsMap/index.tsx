@@ -6,10 +6,12 @@ import { BindingAction, BindingCallback1 } from 'run-and-drive-lib/models';
 
 import { GOOGLE_MAPS_KEY } from '@constants/index';
 import { HOME_LOCATION } from '@constants/map';
+import ActiveTripLine from '@pages/ActiveTrips/ActiveTripsMap/ActiveTripLine';
 import ActiveTripMarker from '@pages/ActiveTrips/ActiveTripsMap/ActiveTripMarker';
 import { Map, MapWrapper } from '@pages/ActiveTrips/ActiveTripsMap/styles';
 import { useAppSelector } from '@redux/hooks';
 import { selectTripsIds } from '@redux/queries/trips';
+import { selectCurrentTripId } from '@redux/selectors/current_trip_selectors';
 
 import type { CallbackProps } from '@pages/ActiveTrips/ActiveTripsMap/ActiveTripMarker';
 
@@ -21,6 +23,11 @@ interface Props {
 
 const ActiveTripsMap: FC<Props> = ({ followingTripId, onMapDrag, onTripClick }) => {
   const activeTripsIds = useAppSelector(selectTripsIds) as string[];
+  const currentTripId = useAppSelector(selectCurrentTripId);
+  const notCurrentTripsIds = useMemo(
+    () => activeTripsIds.filter((id) => id !== currentTripId),
+    [currentTripId],
+  );
 
   const [mapInstance, setMapInstance] = useState<google.maps.Map>();
 
@@ -73,7 +80,7 @@ const ActiveTripsMap: FC<Props> = ({ followingTripId, onMapDrag, onTripClick }) 
       >
         {mapInstance && (
           <>
-            {activeTripsIds.map((tripId) => (
+            {notCurrentTripsIds.map((tripId) => (
               <ActiveTripMarker
                 key={tripId}
                 tripId={tripId}
@@ -81,6 +88,16 @@ const ActiveTripsMap: FC<Props> = ({ followingTripId, onMapDrag, onTripClick }) 
                 onTripClick={handleMarkerClick}
               />
             ))}
+            {currentTripId && (
+              <>
+                <ActiveTripMarker
+                  tripId={currentTripId}
+                  onLocationUpdate={handleMarkerLocationUpdate}
+                  onTripClick={handleMarkerClick}
+                />
+                <ActiveTripLine tripId={currentTripId} />
+              </>
+            )}
           </>
         )}
       </GoogleMap>

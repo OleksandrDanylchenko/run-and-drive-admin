@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo, useEffect } from 'react';
+import { FC, useCallback, useMemo, useEffect, memo } from 'react';
 
 import { Marker } from '@react-google-maps/api';
 import { mapsConstants } from 'run-and-drive-lib/components';
@@ -64,4 +64,4 @@ const ActiveTripMarker: FC<Props> = ({ tripId, onLocationUpdate, onTripClick }) 
   ) : null;
 };
 
-export default ActiveTripMarker;
+export default memo(ActiveTripMarker);
